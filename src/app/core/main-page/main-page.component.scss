@@ -1,0 +1,13 @@
+.mainPage{
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+app-card-list{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 70%;
+    height: 100%;
+}

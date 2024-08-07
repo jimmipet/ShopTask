@@ -1,0 +1,15 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+app-main-page{
+    flex-grow: 1;
+}
+app-header{
+    height: 10%;
+    width: 100%;
+}
+
