@@ -7,17 +7,16 @@ import Product from "../../typing";
 @Injectable({providedIn: 'root'})
 
 export class CardListItemService {
-    private baseUrl = 'https://fakestoreapi.com/products';
+    private readonly baseUrl: string = 'https://fakestoreapi.com/products';
 
-    private readonly httClient = inject(HttpClient)
+    private readonly httClient: HttpClient = inject(HttpClient)
   
-    getProducts(): Observable<Product[]> {
+    public getProducts(): Observable<Product[]> {
       return this.httClient.get<Product []>(this.baseUrl);
       
     }
   
-    getProduct(id: number): Observable<Product> {
-      return this.httClient.get<Product>('${this.baseUrl}/${id}');
-
-    }
+    // public getProduct(id: number): Observable<Product> {
+    //   return this.httClient.get<Product>(`${this.baseUrl}/${id}`);
+    // }
 }

@@ -1,0 +1,13 @@
+.card-list-item{
+    cursor: pointer;
+    height: 600px;
+    border: 1px solid black;
+    &__image{
+        height: 250px;
+    }
+    &__image-img{
+        width: 100%;
+        height: 100%;
+    }
+
+}
