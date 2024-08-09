@@ -14,5 +14,9 @@ export class HeaderComponent {
   public navigateToMainPage(): void {
     this.router.navigate(['']);
   }
+
+  public navigateToBusket(): void {
+    this.router.navigate(['/busket']);
+  }
   
 }

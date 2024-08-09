@@ -10,5 +10,9 @@ export const routes: Routes = [
     {
         path: 'card-list-item/:id',
         loadComponent: () => import('./core/about-card-list-item/about-card-list-item.component').then(c => c.AboutCardListItemComponent)
+    },
+    {
+        path: 'busket',
+        loadComponent: () => import('./features/busket/busket.component').then(c => c.BusketComponent)
     }
 ];

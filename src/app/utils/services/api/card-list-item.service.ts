@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { Observable, tap } from "rxjs";
-import Product from "../../typing";
+import Product from "../../../../typing";
 
 
 @Injectable({providedIn: 'root'})

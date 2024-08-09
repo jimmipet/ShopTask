@@ -1,9 +1,9 @@
 @if (product$ | async; as product ) {
-    <div>
+    <div class="about-card-list-item">
         <h1>{{product.title}}</h1>
 
         <div>
-            <img src="{{product.image}}" alt="">
+            <img class="about-card-list-item__img" src="{{product.image}}" alt="">
         </div>
     
         <div>
@@ -11,7 +11,7 @@
             <p>{{product.price}}</p>
         </div>
     
-        <button>Добавить в корзину</button>
+        <button (click)="addToCart(product)">Добавить в корзину</button>
     </div>
     }
 

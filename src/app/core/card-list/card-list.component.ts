@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { CardListItemComponent } from "../../features/card-list-item/card-list-item.component";
-import { CardListItemService } from '../../api/card-list-item.service';
 import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import Product from '../../../typing';
+import { CardListItemService } from '../../utils/services/api/card-list-item.service';
 
 @Component({
   standalone: true,

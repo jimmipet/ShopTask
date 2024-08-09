@@ -1,1 +1,24 @@
-<p>busket works!</p>
+<div class="busket">
+    @if(cartItems$ | async; as cartItems){
+        <h2>Корзина</h2>
+        <ul>
+        @for(item of cartItems; track $index){
+           <li>
+            <img class="busket__img" [src]="item.product.image" alt="{{ item.product.title }}" />
+            <div>
+              <h3>{{ item.product.title }}</h3>
+              <p>{{ item.product.description }}</p>
+              <p>{{ item.product.price }}</p>
+            </div>
+          </li>
+          <div>
+            <p>Количество</p>
+            <button (click)="decreaseQuantity(item.product.id)">-</button>
+            <span>{{item.quantity}}</span>
+            <button (click)="increaseQuantity(item.product.id)" >+</button>
+          </div>
+          <button (click)="removeFromCart(item.product.id)">Удалить из корзины</button>
+        }
+    </ul>
+    }
+</div>

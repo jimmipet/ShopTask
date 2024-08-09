@@ -1,0 +1,8 @@
+.busket{
+    display: flex;
+    flex-direction: column;
+    &__img{
+        width: 200px;
+        height: 300px;
+    }
+}

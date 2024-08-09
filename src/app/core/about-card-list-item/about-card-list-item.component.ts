@@ -1,9 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import Product from '../../../typing';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { CardListItemService } from '../../api/card-list-item.service';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
+import { CartService } from '../../utils/services/cart/cart.service';
+import { CardListItemService } from '../../utils/services/api/card-list-item.service';
 
 @Component({
   standalone: true,
@@ -13,11 +14,13 @@ import { Observable, switchMap } from 'rxjs';
   imports: [CommonModule]
 })
 export class AboutCardListItemComponent implements OnInit {
+  @Input() cart$: Observable<Product> = of({} as Product);
+
   public product$: Observable<Product> | undefined;
 
   private readonly activatedRoute:ActivatedRoute = inject(ActivatedRoute);
   private readonly cardListItemService:CardListItemService = inject(CardListItemService);
-
+  private readonly cartService: CartService = inject(CartService);
 
   ngOnInit(): void {
     this.product$ = this.activatedRoute.paramMap.pipe(
@@ -27,4 +30,9 @@ export class AboutCardListItemComponent implements OnInit {
       })
     );
   }
+
+  public addToCart(cart: Product): void {
+    this.cartService.addToCart(cart);
+  }
+
 }
