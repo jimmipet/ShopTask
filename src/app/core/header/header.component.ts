@@ -11,7 +11,7 @@ export class HeaderComponent {
 
   private readonly router: Router = inject(Router);
 
-  public navigateToMainPage() {
+  public navigateToMainPage(): void {
     this.router.navigate(['']);
   }
   

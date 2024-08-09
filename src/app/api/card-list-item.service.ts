@@ -16,7 +16,7 @@ export class CardListItemService {
       
     }
   
-    // public getProduct(id: number): Observable<Product> {
-    //   return this.httClient.get<Product>(`${this.baseUrl}/${id}`);
-    // }
+    public getProduct(id: number): Observable<Product> {
+      return this.httClient.get<Product>(`${this.baseUrl}/${id}`);
+    }
 }

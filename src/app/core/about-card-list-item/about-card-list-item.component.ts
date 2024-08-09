@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import Product from '../../../typing';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { CardListItemService } from '../../api/card-list-item.service';
+import { Observable, switchMap } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -10,9 +13,18 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule]
 })
 export class AboutCardListItemComponent implements OnInit {
-  product: Product | undefined;
+  public product$: Observable<Product> | undefined;
+
+  private readonly activatedRoute:ActivatedRoute = inject(ActivatedRoute);
+  private readonly cardListItemService:CardListItemService = inject(CardListItemService);
+
 
   ngOnInit(): void {
-      this.product = history.state.product;
+    this.product$ = this.activatedRoute.paramMap.pipe(
+      switchMap(params => {
+        const id = Number(params.get('id'));
+        return this.cardListItemService.getProduct(id);
+      })
+    );
   }
 }
