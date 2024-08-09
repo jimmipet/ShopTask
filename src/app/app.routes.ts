@@ -3,6 +3,12 @@ import { MainPageComponent } from './core/main-page/main-page.component';
 import { AboutCardListItemComponent } from './core/about-card-list-item/about-card-list-item.component';
 
 export const routes: Routes = [
-    {path:'', component: MainPageComponent},
-    {path:'card-list-item/:id', component: AboutCardListItemComponent},
+    {
+        path: '',
+        loadComponent: () => import('./core/main-page/main-page.component').then(c => c.MainPageComponent)
+    },
+    {
+        path: 'card-list-item/:id',
+        loadComponent: () => import('./core/about-card-list-item/about-card-list-item.component').then(c => c.AboutCardListItemComponent)
+    }
 ];
