@@ -1,0 +1,22 @@
+.header{
+    height: 100%;
+    width: 100%;
+    background-color: rgb(33, 37, 41);
+    display: flex;
+    justify-content: space-between;
+    p{
+        color: rgba(255, 255, 255, 0.55);;
+    }
+    &__item{
+        margin-left: 20px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:last-child{
+            margin-right: 20px;
+            margin-left: 0;
+        }
+    }
+    
+}
