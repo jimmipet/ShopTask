@@ -1,23 +1,31 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import Product, { CartItem } from '../../../typing';
+import { map, Observable } from 'rxjs';
+import { CartItem } from '../../../typing';
 import { CartService } from '../../utils/services/cart/cart.service';
 import { CommonModule } from '@angular/common';
+import { BusketItemComponent } from "../../features/busket-item/busket-item.component";
 
 @Component({
   standalone: true,
   selector: 'app-busket',
   templateUrl: './busket.component.html',
   styleUrl: './busket.component.scss',
-  imports: [CommonModule],
+  imports: [CommonModule, BusketItemComponent],
 })
 export class BusketComponent implements OnInit {
   public cartItems$: Observable<CartItem[]> | undefined;
+  public totalSum$: Observable<number> | undefined;
 
   private readonly cartService:CartService = inject(CartService);
 
   ngOnInit(): void {
     this.cartItems$ = this.cartService.getCart();
+    
+    this.totalSum$ = this.cartItems$.pipe(
+      map((items: CartItem[]) =>
+        items.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
+      )
+    );
   }
 
   public removeFromCart(productId: number): void {

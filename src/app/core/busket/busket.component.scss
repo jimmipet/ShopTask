@@ -1,0 +1,13 @@
+.busket{
+    display: flex;
+    flex-direction: column;
+    &__title{
+        font-size: 30px;
+    }
+    &__total-sum{
+        font-size: 30px;
+    }
+    span{
+        font-size: 30px;
+    }
+}

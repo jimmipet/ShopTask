@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { MainPageComponent } from './core/main-page/main-page.component';
-import { AboutCardListItemComponent } from './core/about-card-list-item/about-card-list-item.component';
 
 export const routes: Routes = [
     {
@@ -13,6 +11,6 @@ export const routes: Routes = [
     },
     {
         path: 'busket',
-        loadComponent: () => import('./features/busket/busket.component').then(c => c.BusketComponent)
+        loadComponent: () => import('./core/busket/busket.component').then(c => c.BusketComponent)
     }
 ];

@@ -14,7 +14,6 @@ import { CardListItemService } from '../../utils/services/api/card-list-item.ser
   imports: [CommonModule]
 })
 export class AboutCardListItemComponent implements OnInit {
-  @Input() cart$: Observable<Product> = of({} as Product);
 
   public product$: Observable<Product> | undefined;
 

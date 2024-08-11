@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HeaderButtonComponent } from './headerButton.component';
+import { BusketItemComponent } from './busket-item.component';
 
-describe('HeaderButtonComponent', () => {
-  let component: HeaderButtonComponent;
-  let fixture: ComponentFixture<HeaderButtonComponent>;
+describe('BusketItemComponent', () => {
+  let component: BusketItemComponent;
+  let fixture: ComponentFixture<BusketItemComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeaderButtonComponent]
+      imports: [BusketItemComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HeaderButtonComponent);
+    fixture = TestBed.createComponent(BusketItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

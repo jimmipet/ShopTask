@@ -13,7 +13,6 @@ export class CartService {
   private readonly productsInCart: CartItem[] = [];
   private readonly cartSubject = new BehaviorSubject<CartItem[]>(this.productsInCart);
 
-
   public addToCart(product: Product): void {
     const existingItem = this.productsInCart.find(item => item.product.id === product.id);
 
@@ -37,6 +36,7 @@ export class CartService {
 
   public increaseQuantity(productId: number): void {
     const product = this.productsInCart.find(item => item.product.id === productId);
+
     if (product) {
       this.addToCart(product.product);
     }
@@ -44,6 +44,7 @@ export class CartService {
 
   public decreaseQuantity(productId: number): void {
     const product = this.productsInCart.find(item => item.product.id === productId);
+    
     if (product && product.quantity > 1) {
       product.quantity -= 1;
       this.cartSubject.next([...this.productsInCart]);
@@ -52,7 +53,7 @@ export class CartService {
     }
   }
 
-//текущее состояние корзины 
+//текущее состояние корзины
   public getCart(): Observable<CartItem[]> {
     return this.cartSubject.asObservable();
   }

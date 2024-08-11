@@ -14,7 +14,7 @@ export class CardListItemComponent {
 
   private readonly router: Router = inject(Router);
 
-  public navigateToProductDetail() {
-    this.router.navigate(['/card-list-item', this.product.id], { state: { product: this.product } });
+  public navigateToProductDetail(): void {
+    this.router.navigate(['/card-list-item', this.product.id]);
   }
 }

@@ -1,0 +1,33 @@
+.busket-item{
+    display: flex;
+    flex-direction: column;
+    &__list{
+        display:flex;
+        flex-direction: column;
+    }
+    &__product{
+        display: flex;
+        justify-content: space-between;
+    }
+    &__product-info{
+        width: 80%;
+        display: flex;
+    }
+    &__details{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+    &__image{
+        width: 200px;
+        height: 300px;
+    }
+    &__quantity{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+    &__quantity-button{
+        width: 50%;
+    }
+}
