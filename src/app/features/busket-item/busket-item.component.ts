@@ -9,9 +9,8 @@ import { CartItem } from '../../../typing';
   styleUrl: './busket-item.component.scss'
 })
 export class BusketItemComponent {
-  @Input({ required: true }) cartItems!: CartItem[];
   
-  // private readonly cartService:CartService = inject(CartService);
+  @Input({ required: true }) cartItems!: CartItem[];
   
   @Output() removeItem = new EventEmitter<number>();
   @Output() increaseItemQuantity = new EventEmitter<number>();

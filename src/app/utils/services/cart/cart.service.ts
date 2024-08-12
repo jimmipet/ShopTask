@@ -12,6 +12,9 @@ export class CartService {
 
   private readonly productsInCart: CartItem[] = [];
   private readonly cartSubject = new BehaviorSubject<CartItem[]>(this.productsInCart);
+  private cartItemCount = new BehaviorSubject<number>(0);
+
+ 
 
   public addToCart(product: Product): void {
     const existingItem = this.productsInCart.find(item => item.product.id === product.id);
@@ -23,6 +26,7 @@ export class CartService {
     }
 
     this.cartSubject.next([...this.productsInCart]);
+    this.updateCartItemCount();
   }
 
   public removeFromCart(productId: number): void {
@@ -32,6 +36,7 @@ export class CartService {
       this.productsInCart.splice(itemIndex, 1);
       this.cartSubject.next([...this.productsInCart]);
     }
+    this.updateCartItemCount();
   }
 
   public increaseQuantity(productId: number): void {
@@ -40,6 +45,7 @@ export class CartService {
     if (product) {
       this.addToCart(product.product);
     }
+    this.updateCartItemCount();
   }
 
   public decreaseQuantity(productId: number): void {
@@ -51,11 +57,19 @@ export class CartService {
     } else if (product && product.quantity === 1) {
       this.removeFromCart(productId);
     }
+    this.updateCartItemCount();
   }
 
-//текущее состояние корзины
+  //текущее состояние корзины
   public getCart(): Observable<CartItem[]> {
     return this.cartSubject.asObservable();
+  }
+  //состояние кол-во товаров в корзине
+  public cartItemCount$: Observable<number> = this.cartItemCount.asObservable();
+
+  public updateCartItemCount(): void {
+    const totalItems = this.productsInCart.reduce((acc, item) => acc + item.quantity, 0);
+    this.cartItemCount.next(totalItems);
   }
 
 }
