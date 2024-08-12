@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import Product, { CartItem } from '../../../../typing';
 
 
@@ -9,67 +9,70 @@ import Product, { CartItem } from '../../../../typing';
 
 
 export class CartService {
-
-  private readonly productsInCart: CartItem[] = [];
-  private readonly cartSubject = new BehaviorSubject<CartItem[]>(this.productsInCart);
-  private cartItemCount = new BehaviorSubject<number>(0);
-
- 
+  
+  private readonly cart$ = new BehaviorSubject<CartItem[]>([]);
+  private readonly cartItemCount = new BehaviorSubject<number>(0);
 
   public addToCart(product: Product): void {
-    const existingItem = this.productsInCart.find(item => item.product.id === product.id);
+    const currentCartItems = this.cart$.getValue();
+    const existingItem = currentCartItems.find(item => item.product.id === product.id);
 
     if (existingItem) {
       existingItem.quantity += 1;
     } else {
-      this.productsInCart.push({ product, quantity: 1 });
+      currentCartItems.push({ product, quantity: 1 });
     }
 
-    this.cartSubject.next([...this.productsInCart]);
-    this.updateCartItemCount();
+    this.cart$.next([...currentCartItems]);
+    this.cartItemCount.next(currentCartItems.reduce((count, item) => count + item.quantity, 0));
   }
 
   public removeFromCart(productId: number): void {
-    const itemIndex = this.productsInCart.findIndex(item => item.product.id === productId);
+    const currentCartItems = this.cart$.getValue();
+    const updatedCartItems = currentCartItems.filter(item => item.product.id !== productId);
 
-    if (itemIndex > -1) {
-      this.productsInCart.splice(itemIndex, 1);
-      this.cartSubject.next([...this.productsInCart]);
-    }
-    this.updateCartItemCount();
+    this.cart$.next(updatedCartItems);
+    this.cartItemCount.next(updatedCartItems.reduce((count, item) => count + item.quantity, 0));
   }
 
   public increaseQuantity(productId: number): void {
-    const product = this.productsInCart.find(item => item.product.id === productId);
+    const currentCartItems = this.cart$.getValue();
+    const product = currentCartItems.find(item => item.product.id === productId);
 
     if (product) {
-      this.addToCart(product.product);
+      product.quantity += 1;
+      this.cart$.next([...currentCartItems]);
+      this.cartItemCount.next(currentCartItems.reduce((count, item) => count + item.quantity, 0));
     }
-    this.updateCartItemCount();
   }
 
   public decreaseQuantity(productId: number): void {
-    const product = this.productsInCart.find(item => item.product.id === productId);
+    const currentCartItems = this.cart$.getValue();
+    const product = currentCartItems.find(item => item.product.id === productId);
     
     if (product && product.quantity > 1) {
       product.quantity -= 1;
-      this.cartSubject.next([...this.productsInCart]);
+      this.cart$.next([...currentCartItems]);
+      this.cartItemCount.next(currentCartItems.reduce((count, item) => count + item.quantity, 0));
     } else if (product && product.quantity === 1) {
       this.removeFromCart(productId);
     }
-    this.updateCartItemCount();
   }
 
-  //текущее состояние корзины
+  public calculateTotalSum(cartItems$: Observable<CartItem[]>): Observable<number> {
+    return cartItems$.pipe(
+      map((items: CartItem[]) =>
+        items.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
+      )
+    );
+  }
+
+  // Текущее состояние корзины
   public getCart(): Observable<CartItem[]> {
-    return this.cartSubject.asObservable();
+    return this.cart$.asObservable();
   }
-  //состояние кол-во товаров в корзине
-  public cartItemCount$: Observable<number> = this.cartItemCount.asObservable();
 
-  public updateCartItemCount(): void {
-    const totalItems = this.productsInCart.reduce((acc, item) => acc + item.quantity, 0);
-    this.cartItemCount.next(totalItems);
-  }
+  // Состояние количества товаров в корзине
+  public readonly cartItemCount$: Observable<number> = this.cartItemCount.asObservable();
 
 }

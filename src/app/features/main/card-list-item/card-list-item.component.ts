@@ -1,6 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
-import Product from '../../../typing';
 import { Router, RouterOutlet } from '@angular/router';
+import Product from '../../../../typing';
 
 @Component({
   standalone: true,

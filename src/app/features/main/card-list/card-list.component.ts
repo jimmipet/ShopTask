@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { CardListItemComponent } from "../../features/card-list-item/card-list-item.component";
+import { CardListItemComponent } from "../card-list-item/card-list-item.component";
 import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
-import Product from '../../../typing';
-import { CardListItemService } from '../../utils/services/api/card-list-item.service';
+import Product from '../../../../typing';
+import { CardListItemService } from '../../../utils/services/api/card-list-item.service';
 
 @Component({
   standalone: true,
@@ -15,7 +15,6 @@ import { CardListItemService } from '../../utils/services/api/card-list-item.ser
 export class CardListComponent {
 
   private readonly cardListItemService: CardListItemService = inject(CardListItemService)
-  
   public readonly products$: Observable<Product[]>= this.cardListItemService.getProducts();
   
 }

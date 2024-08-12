@@ -1,14 +1,13 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { CartService } from '../../utils/services/cart/cart.service';
-import { CartItem } from '../../../typing';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CartItem } from '../../../../typing';
 
 @Component({
   standalone: true,
-  selector: 'app-busket-item',
-  templateUrl: './busket-item.component.html',
-  styleUrl: './busket-item.component.scss'
+  selector: 'app-cart-item',
+  templateUrl: './cart-item.component.html',
+  styleUrl: './cart-item.component.scss'
 })
-export class BusketItemComponent {
+export class CartItemComponent {
   
   @Input({ required: true }) cartItems!: CartItem[];
   

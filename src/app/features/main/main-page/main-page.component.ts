@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { CardListComponent } from '../card-list/card-list.component';
 import { CommonModule } from '@angular/common';
+import { CardListComponent } from '../card-list/card-list.component';
 
 @Component({
   standalone: true,
