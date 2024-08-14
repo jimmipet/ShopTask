@@ -10,7 +10,7 @@ export const routes: Routes = [
         loadComponent: () => import('./features/about-card-list-item/about-card-list-item.component').then(c => c.AboutCardListItemComponent)
     },
     {
-        path: 'busket',
+        path: 'cart',
         loadComponent: () => import('./features/cart/cart/cart.component').then(c => c.CartComponent)
     }
 ];

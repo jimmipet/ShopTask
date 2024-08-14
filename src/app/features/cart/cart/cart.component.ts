@@ -13,8 +13,8 @@ import { CartItemComponent } from "../cart-item/cart-item.component";
   imports: [CommonModule, CartItemComponent],
 })
 export class CartComponent {
-
-  public readonly cartItems$: Observable<CartItem[]> = inject(CartService).getCart();
+  public readonly cartItems: CartService = inject(CartService)
+  public readonly cartItems$: Observable<CartItem[]> = this.cartItems.getCart();
   public readonly totalSum$: Observable<number> = inject(CartService).calculateTotalSum(this.cartItems$);
   private readonly cartService = inject(CartService);
   

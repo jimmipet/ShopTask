@@ -11,9 +11,9 @@ export class CartItemComponent {
   
   @Input({ required: true }) cartItems!: CartItem[];
   
-  @Output() removeItem = new EventEmitter<number>();
-  @Output() increaseItemQuantity = new EventEmitter<number>();
-  @Output() decreaseItemQuantity = new EventEmitter<number>();
+  @Output() public readonly removeItem: EventEmitter<number> = new EventEmitter<number>();
+  @Output() public readonly increaseItemQuantity: EventEmitter<number> = new EventEmitter<number>();
+  @Output() public readonly decreaseItemQuantity: EventEmitter<number> = new EventEmitter<number>();
 
   public onRemoveFromCart(productId: number): void {
     this.removeItem.emit(productId);

@@ -14,7 +14,7 @@ import { CardListItemService } from '../../../utils/services/api/card-list-item.
 })
 export class CardListComponent {
 
-  private readonly cardListItemService: CardListItemService = inject(CardListItemService)
+  private readonly cardListItemService: CardListItemService = inject(CardListItemService);
   public readonly products$: Observable<Product[]>= this.cardListItemService.getProducts();
   
 }

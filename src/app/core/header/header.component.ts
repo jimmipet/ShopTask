@@ -12,15 +12,15 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule]
 })
 export class HeaderComponent {
-  
-  public readonly cartItemCount$: Observable<number> = inject(CartService).cartItemCount$;
-  private readonly router = inject(Router);
+  private readonly cartService = inject(CartService);
+  private readonly router: Router = inject(Router);
+  public readonly cartItemCount$: Observable<number> = this.cartService.getCartItemCount(); 
 
   public navigateToMainPage(): void {
     this.router.navigate(['']);
   }
 
-  public navigateToBusket(): void {
-    this.router.navigate(['/busket']);
+  public navigateToCart(): void {
+    this.router.navigate(['/cart']);
   }
 }

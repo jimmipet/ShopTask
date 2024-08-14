@@ -8,7 +8,7 @@ import Product from "../../../../typing";
 
 export class CardListItemService {
     private readonly baseUrl: string = 'https://fakestoreapi.com/products';
-
+    
     private readonly httClient: HttpClient = inject(HttpClient)
   
     public getProducts(): Observable<Product[]> {
@@ -16,7 +16,7 @@ export class CardListItemService {
       
     }
   
-    public getProduct(id: number): Observable<Product> {
+    public getProductById$(id: number): Observable<Product> {
       return this.httClient.get<Product>(`${this.baseUrl}/${id}`);
     }
 }

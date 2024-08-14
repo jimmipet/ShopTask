@@ -14,21 +14,17 @@ import { CardListItemService } from '../../utils/services/api/card-list-item.ser
   imports: [CommonModule]
 })
 export class AboutCardListItemComponent {
-
-  public readonly product$: Observable<Product>;
   private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private readonly cardListItemService: CardListItemService = inject(CardListItemService);
   private readonly cartService: CartService = inject(CartService);
 
-  constructor() {
-    this.product$ = this.activatedRoute.paramMap.pipe(
-      switchMap(params => {
-        const id = Number(params.get('id'));
-        return this.cardListItemService.getProduct(id);
-      })
-    );
-  }
-
+  public readonly product$: Observable<Product> = this.activatedRoute.paramMap.pipe(
+    switchMap(params => {
+      const id = Number(params.get('id'));
+      return this.cardListItemService.getProductById$(id);
+    })
+  );
+  
   public addToCart(product: Product): void {
     this.cartService.addToCart(product);
   }
