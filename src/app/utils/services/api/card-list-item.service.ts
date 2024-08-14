@@ -7,7 +7,7 @@ import Product from "../../../../typing";
 @Injectable({providedIn: 'root'})
 
 export class CardListItemService {
-    private readonly baseUrl: string = 'https://fakestoreapi.com/products';
+    private readonly baseUrl: string = 'http://localhost:5008/products';
     
     private readonly httClient: HttpClient = inject(HttpClient)
   
