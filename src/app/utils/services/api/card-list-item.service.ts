@@ -32,10 +32,10 @@ export class CardListItemService {
     }
 
     public increaseQuantity(productId: number): Observable<string> {
-      return this.httpClient.post<string>(`${this.baseUrl}/${productId}/increasequantity`, { responseType: 'text' });
+      return this.httpClient.put<string>(`${this.baseUrl}/${productId}/increasequantity`, { responseType: 'text' });
     }
   
     public decreaseQuantity(productId: number): Observable<string> {
-      return this.httpClient.post<string>(`${this.baseUrl}/${productId}/decreasequantity`, { responseType: 'text' });
+      return this.httpClient.put<string>(`${this.baseUrl}/${productId}/decreasequantity`, { responseType: 'text' });
     }
 }
