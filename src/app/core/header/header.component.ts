@@ -1,7 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { CartService } from '../../utils/services/cart/cart.service';
-import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -12,9 +10,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule]
 })
 export class HeaderComponent {
-  private readonly cartService = inject(CartService);
   private readonly router: Router = inject(Router);
-  public readonly cartItemCount$: Observable<number> = this.cartService.getCartItemCount(); 
 
   public navigateToMainPage(): void {
     this.router.navigate(['']);

@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, inject, Input} from '@angular/core';
 import { CartItem } from '../../../../typing';
+import { CartService } from '../../../utils/services/cart/cart.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -8,23 +10,40 @@ import { CartItem } from '../../../../typing';
   styleUrl: './cart-item.component.scss'
 })
 export class CartItemComponent {
+  public readonly cartService: CartService= inject (CartService);
+
+  @Input({ required: true }) cartItems!: CartItem[] | null;
   
-  @Input({ required: true }) cartItems!: CartItem[];
+  public async onRemoveFromCart(productId: number): Promise<void>  {
+    await firstValueFrom(this.cartService.removeFromCart(productId))
+    if (this.cartItems) {
+      this.cartItems = this.cartItems.filter(item => item.id !== productId);
+    }
+  }
+
+  public async onIncreaseQuantity(productId: number): Promise<void> {
+    await firstValueFrom(this.cartService.increaseQuantity(productId))
+    if (this.cartItems) {
+      const item = this.cartItems.find(item => item.id === productId);
+      if (item && item.count > 0) {
+        item.count += 1;
+        item.price += item.price / (item.count-1)
+      }
+    }
+  }
   
-  @Output() public readonly removeItem: EventEmitter<number> = new EventEmitter<number>();
-  @Output() public readonly increaseItemQuantity: EventEmitter<number> = new EventEmitter<number>();
-  @Output() public readonly decreaseItemQuantity: EventEmitter<number> = new EventEmitter<number>();
-
-  public onRemoveFromCart(productId: number): void {
-    this.removeItem.emit(productId);
+  public async onDecreaseQuantity(productId: number): Promise<void> {
+    await firstValueFrom(this.cartService.decreaseQuantity(productId));
+    if (this.cartItems) {
+      const item = this.cartItems.find(item => item.id === productId);
+      if (item) {
+        if (item.count > 1) {
+          item.price -= item.price / item.count;
+          item.count -= 1;
+        } else {
+          await this.onRemoveFromCart(productId);
+        }
+      }
+    }
   }
-
-  public onIncreaseQuantity(productId: number): void {
-    this.increaseItemQuantity.emit(productId);
-  }
-
-  public onDecreaseQuantity(productId: number): void {
-    this.decreaseItemQuantity.emit(productId);
-  }
-
 }

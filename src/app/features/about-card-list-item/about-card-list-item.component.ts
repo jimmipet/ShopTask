@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject} from '@angular/core';
 import Product from '../../../typing';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -28,5 +28,4 @@ export class AboutCardListItemComponent {
   public addToCart(product: Product): void {
     this.cartService.addToCart(product);
   }
-
 }

@@ -1,9 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Component, inject, Input} from '@angular/core';
+import { Observable, tap} from 'rxjs';
 import { CartItem } from '../../../../typing';
 import { CartService } from '../../../utils/services/cart/cart.service';
 import { CommonModule } from '@angular/common';
 import { CartItemComponent } from "../cart-item/cart-item.component";
+import { CardListItemService } from '../../../utils/services/api/card-list-item.service';
 
 @Component({
   standalone: true,
@@ -13,13 +14,14 @@ import { CartItemComponent } from "../cart-item/cart-item.component";
   imports: [CommonModule, CartItemComponent],
 })
 export class CartComponent {
-  public readonly cartItems: CartService = inject(CartService)
-  public readonly cartItems$: Observable<CartItem[]> = this.cartItems.getCart();
-  public readonly totalSum$: Observable<number> = inject(CartService).calculateTotalSum(this.cartItems$);
+  @Input({ required: true }) cartItems!: CartItem[] | null;
+
+  public cardListItemService: CardListItemService = inject(CardListItemService);
+  public  cartItems$: Observable<CartItem[]> = this.cardListItemService.getProductCart();
   private readonly cartService = inject(CartService);
   
   public removeFromCart(productId: number): void {
-    this.cartService.removeFromCart(productId);
+    this.cartService.removeFromCart(productId)
   }
 
   public increaseQuantity(productId: number): void {
@@ -28,5 +30,9 @@ export class CartComponent {
 
   public decreaseQuantity(productId: number): void {
     this.cartService.decreaseQuantity(productId);
+  }
+  //при удалении пока не обновляется
+  public getTotalSum(cartItems: CartItem[]): number {
+    return cartItems.reduce((sum, item) => sum + (item.price), 0);
   }
 }
