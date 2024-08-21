@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CardListItemService } from '../../utils/services/api/card-list-item.service';
@@ -14,8 +14,9 @@ import Product from '../../../typing';
 })
 
 export class AddEditProductComponent implements OnInit {
-  public mode: 'add' | 'edit' = 'add';
-  public product?: Product;
+  @Input() mode: 'add' | 'edit' = 'add';
+  @Input({required: true}) product?: Product;
+  
   private readonly router: Router = inject(Router);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly cardListItemService: CardListItemService = inject(CardListItemService);
@@ -79,4 +80,3 @@ export class AddEditProductComponent implements OnInit {
     this.productForm.reset();
   }
 }
-
