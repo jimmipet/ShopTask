@@ -5,7 +5,7 @@
     <div class="header__item" (click)="navigateToCart()">
         <p class="header__text" >Корзина</p>
         <div class="header__count">
-            <p>Товаров в корзине <span></span></p> 
+            <p>Товаров в корзине <span>{{ quantity$ | async }}</span></p> 
         </div>
     </div>
 </div>

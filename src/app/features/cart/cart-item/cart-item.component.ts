@@ -10,7 +10,7 @@ import { firstValueFrom } from 'rxjs';
   styleUrl: './cart-item.component.scss'
 })
 export class CartItemComponent {
-  public readonly cartService: CartService= inject (CartService);
+  public readonly cartService: CartService = inject(CartService);
 
   @Input({ required: true }) cartItems!: CartItem[] | null;
   

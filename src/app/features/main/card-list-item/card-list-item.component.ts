@@ -17,4 +17,8 @@ export class CardListItemComponent {
   public navigateToProductDetail(): void {
     this.router.navigate(['/card-list-item', this.product.id]);
   }
+
+  public navigateToEditProduct(): void {
+    this.router.navigate(['/add-product'], { queryParams: { mode: 'edit', productId: this.product.id } });
+  }
 }

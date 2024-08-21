@@ -4,6 +4,7 @@ import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import Product from '../../../../typing';
 import { CardListItemService } from '../../../utils/services/api/card-list-item.service';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -15,6 +16,10 @@ import { CardListItemService } from '../../../utils/services/api/card-list-item.
 export class CardListComponent {
 
   private readonly cardListItemService: CardListItemService = inject(CardListItemService);
-  public readonly products$: Observable<Product[]>= this.cardListItemService.getProducts();
+  public readonly products$: Observable<Product[]>= this.cardListItemService.getProducts$();
+  private readonly router: Router = inject(Router);
   
+  public navigateToAddProduct(): void {
+    this.router.navigate(['/add-product'], { queryParams: { mode: 'add' } });
+  }
 }

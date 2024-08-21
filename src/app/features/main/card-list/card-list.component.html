@@ -1,3 +1,4 @@
+<button class="add-product" (click)="navigateToAddProduct()">Добавить товар</button>
 <div class="card-list" >
     @if (products$ | async; as products ) {
         @for (product of products; track $index) {

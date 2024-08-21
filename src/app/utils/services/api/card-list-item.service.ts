@@ -1,8 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { Observable} from "rxjs";
-import Product, { CartItem } from "../../../../typing";
-
+import { Observable, tap} from "rxjs";
+import Product, { CardItemDto, CartItem } from "../../../../typing";
 
 @Injectable({providedIn: 'root'})
 
@@ -11,8 +10,8 @@ export class CardListItemService {
     
     private readonly httpClient: HttpClient = inject(HttpClient)
   
-    public getProducts(): Observable<Product[]> {
-      return this.httpClient.get<Product []>(this.baseUrl);
+    public getProducts$(): Observable<Product[]> {
+      return this.httpClient.get<Product[]>(this.baseUrl);
     }
   
     public getProductById$(id: number): Observable<Product> {
@@ -37,5 +36,13 @@ export class CardListItemService {
   
     public decreaseQuantity(productId: number): Observable<string> {
       return this.httpClient.put<string>(`${this.baseUrl}/${productId}/decreasequantity`, { responseType: 'text' });
+    }
+
+     public addNewProduct(product: CardItemDto[]): Observable<CardItemDto[]> {
+      return this.httpClient.post<CardItemDto[]>(`${this.baseUrl}/add-new-product`, product);
+    }
+
+    public updateProduct(productId: number, product: Product): Observable<Product> {
+      return this.httpClient.put<Product>(`${this.baseUrl}/${productId}/update`, product, { responseType: 'text' as 'json' });
     }
 }

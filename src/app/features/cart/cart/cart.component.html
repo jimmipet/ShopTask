@@ -3,12 +3,14 @@
       <h2 class="cart__title">Корзина</h2>
 
       <app-cart-item
-      [cartItems]="cartItems" >> 
+      
+      [cartItems]="cartItems"
+      >> 
       </app-cart-item>
       
  
       <div class="cart__total">
-        <p class="cart__total-sum" >Итоговая сумма</p><span>{{ getTotalSum(cartItems) | currency}}</span>
+        <p class="cart__total-sum" >Итоговая сумма</p><span>{{ totalSum$ | async}} $</span>
       </div>
 }
 </div>
