@@ -1,7 +1,0 @@
-<div class="card-list" >
-    @if (products$ | async; as products ) {
-        @for (product of products; track $index) {
-            <app-card-list-item  [product]= "product"> </app-card-list-item>
-        }
-    }
-</div>

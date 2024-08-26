@@ -1,0 +1,16 @@
+@if (product$ | async; as product ) {
+    <div class="about-card-list-item">
+        <h1>{{product.title}}</h1>
+
+        <div>
+            <img class="about-card-list-item__img" src="{{product.image}}" alt="">
+        </div>
+    
+        <div>
+            <p>{{product.description}}</p>
+            <p>{{product.price}}</p>
+        </div>
+    
+        <button (click)="addToCart(product)">Добавить в корзину</button>
+    </div>
+}

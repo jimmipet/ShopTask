@@ -8,6 +8,8 @@
         color: rgba(255, 255, 255, 0.55);;
     }
     &__item{
+        display: flex;
+        flex-direction: column;
         margin-left: 20px;
         cursor: pointer;
         display: flex;
@@ -18,5 +20,7 @@
             margin-left: 0;
         }
     }
-    
+    &__count{
+        display: flex;
+    }
 }

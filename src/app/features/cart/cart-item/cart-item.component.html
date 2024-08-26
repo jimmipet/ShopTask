@@ -1,0 +1,27 @@
+@if(cartItems){
+    <div class="cart-item">
+    <div class="cart-item__list">
+        @for(item of cartItems; track $index){
+            <div class="cart-item__product">
+                <div class="cart-item__product-info">
+                <img class="cart-item__image" [src]="item.image" alt="" />
+                <div class="cart-item__details">
+                    <h3 class="cart-item__title">{{ item.title }}</h3>
+                    <p class="cart-item__description">{{ item.description }}</p>
+                    <p class="cart-item__price">Сумма: {{ item.price }}</p>
+                </div>
+            </div>
+            <div class="cart-item__quantity">
+                <div>
+                    <p class="cart-item__quantity-label">Количество</p>
+                    <button class="cart-item__quantity-button" (click)="onDecreaseQuantity(item.id)">-</button>
+                    <span class="cart-item__quantity-value">{{ item.count}}</span>
+                    <button class="cart-item__quantity-button" (click)="onIncreaseQuantity(item.id)">+</button>
+                </div>
+                <button class="cart-item__remove-button" (click)="onRemoveFromCart(item.id)">Удалить из корзины</button>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+}

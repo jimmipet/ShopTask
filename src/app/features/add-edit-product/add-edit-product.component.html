@@ -1,0 +1,15 @@
+<form class="add-edit-product" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <h1 class="add-edit-product__title">{{ mode === 'add' ? 'Добавление товара' : 'Редактирование товара' }}</h1>
+    
+    <input type="text" class="add-edit-product__input" formControlName="title" placeholder="Название товара">
+    <input type="url" class="add-edit-product__input" formControlName="image" placeholder="URL изображения">
+    <input type="text" class="add-edit-product__input" formControlName="description" placeholder="Описание">
+    <input type="text" class="add-edit-product__input" formControlName="category" placeholder="Категория">
+    <input type="number" class="add-edit-product__input" formControlName="price" placeholder="Цена">
+  
+    <div class="add-edit-product__button-container">
+      <button type="button" class="add-edit-product__button add-edit-product__button--cancel" (click)="onCancel()">Выйти</button>
+      <button type="submit" class="add-edit-product__button add-edit-product__button--submit" >{{ mode === 'add' ? 'Сохранить' : 'Обновить' }}</button>
+    </div>
+  </form>
+  
