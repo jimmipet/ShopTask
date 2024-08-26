@@ -34,20 +34,29 @@ export class CartService {
   public decreaseQuantity(productId: number): Observable<string> {
     const result = this.cardListItemService.decreaseQuantity(productId);
     result.subscribe(async () => {
-      const cartItems = await firstValueFrom(this.cardListItemService.getProductCart());
-      const item = cartItems.find(item => item.id === productId);
-      if (item && item.count === 0) {
-        await firstValueFrom(this.removeFromCart(productId));
-      } else {
+        const cartItems = await firstValueFrom(this.cardListItemService.getProductCart());
+        if (!cartItems || cartItems.length === 0) {
+            console.warn('Корзина пуста');
+            this.updateQuantity();
+            return;
+        }
+        const item = cartItems.find(item => item.id === productId);
+        if (item && item.count === 0) {
+            await firstValueFrom(this.removeFromCart(productId));
+        }
         this.updateQuantity();
-      }
     });
     return result;
-  }
+}
+
   
   public async updateQuantity(): Promise<void> {
     const cartItems = await firstValueFrom(this.cardListItemService.getProductCart());
-
+    if (!cartItems || cartItems.length === 0) {
+      this.quantitySubject.next(0);
+      this.totalSumSubject.next(0);
+      return;
+  }
     const totalQuantity = cartItems.reduce((sum, item) => sum + item.count, 0);
     this.quantitySubject.next(totalQuantity)
 

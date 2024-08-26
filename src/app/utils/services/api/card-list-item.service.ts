@@ -39,10 +39,10 @@ export class CardListItemService {
     }
 
      public addNewProduct(product: CardItemDto[]): Observable<CardItemDto[]> {
-      return this.httpClient.post<CardItemDto[]>(`${this.baseUrl}/add-new-product`, product);
+      return this.httpClient.post<CardItemDto[]>(`${this.baseUrl}`, product);
     }
 
     public updateProduct(productId: number, product: Product): Observable<Product> {
-      return this.httpClient.put<Product>(`${this.baseUrl}/${productId}/update`, product, { responseType: 'text' as 'json' });
+      return this.httpClient.put<Product>(`${this.baseUrl}/${productId}`, product, { responseType: 'text' as 'json' });
     }
 }
