@@ -1,0 +1,82 @@
+<section class="catalog">
+  <header class="catalog__header">
+    <h1 class="page-title">Каталог</h1>
+    <a matButton="filled" routerLink="/products/new">
+      <mat-icon>add</mat-icon>
+      Добавить товар
+    </a>
+  </header>
+
+  @if (products.error(); as error) {
+    <div class="notice">
+      <mat-icon>error</mat-icon>
+      <p>{{ error | apiError }}</p>
+    </div>
+  } @else if (products.isLoading()) {
+    <mat-spinner diameter="40" class="spinner" aria-label="Загружаем товары" />
+  } @else {
+    <label class="catalog__search">
+      <mat-icon>search</mat-icon>
+      <input
+        #search
+        class="catalog__search-input"
+        type="search"
+        placeholder="Найти товар"
+        (input)="query.set(search.value)"
+      />
+    </label>
+
+    @if (filtered().length) {
+      <ul class="catalog__grid">
+        @for (product of filtered(); track product.id) {
+          <li>
+            <mat-card class="product-card" appearance="outlined">
+              <a class="product-card__link" [routerLink]="['/products', product.id]">
+                <div class="product-card__media">
+                  @if (product.image; as image) {
+                    <img
+                      class="product-card__image"
+                      [src]="image"
+                      [alt]="product.title"
+                      loading="lazy"
+                    />
+                  }
+                  <span class="product-card__category">{{ product.category }}</span>
+                </div>
+                <div class="product-card__info">
+                  <h2 class="product-card__title">{{ product.title }}</h2>
+                  <p class="product-card__description">{{ product.description }}</p>
+                </div>
+              </a>
+              <div class="product-card__footer">
+                <span class="product-card__price">{{ product.price | currency }}</span>
+                <a
+                  matIconButton
+                  [routerLink]="['/products', product.id, 'edit']"
+                  aria-label="Редактировать"
+                >
+                  <mat-icon>edit</mat-icon>
+                </a>
+                <button
+                  matIconButton
+                  class="product-card__add"
+                  type="button"
+                  aria-label="Добавить в корзину"
+                  [disabled]="cart.isBusy()"
+                  (click)="cart.add(product.id)"
+                >
+                  <mat-icon>add_shopping_cart</mat-icon>
+                </button>
+              </div>
+            </mat-card>
+          </li>
+        }
+      </ul>
+    } @else {
+      <div class="notice">
+        <mat-icon>search_off</mat-icon>
+        <p>Ничего не найдено</p>
+      </div>
+    }
+  }
+</section>

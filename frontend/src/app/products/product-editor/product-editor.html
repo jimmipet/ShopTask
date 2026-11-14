@@ -1,0 +1,33 @@
+<mat-card class="product-editor" appearance="outlined">
+  <h1 class="page-title">
+    {{ id() ? 'Редактирование товара' : 'Новый товар' }}
+  </h1>
+
+  @if (product.error(); as error) {
+    <div class="notice">
+      <mat-icon>error</mat-icon>
+      <p>{{ error | apiError }}</p>
+    </div>
+  } @else if (product.isLoading()) {
+    <mat-spinner diameter="40" class="spinner" aria-label="Загружаем товар" />
+  } @else {
+    <form [formRoot]="productForm">
+      <app-text-field label="Название" [field]="productForm.title" />
+      <app-text-field label="Категория" [field]="productForm.category" />
+      <app-text-field label="Цена" type="number" [field]="productForm.price" />
+      <app-text-field label="Ссылка на изображение" type="url" [field]="productForm.image" />
+      <app-text-field label="Описание" [multiline]="true" [field]="productForm.description" />
+
+      @for (error of productForm().errors(); track error.kind) {
+        <p class="product-editor__error" role="alert">{{ error.message }}</p>
+      }
+
+      <div class="product-editor__actions">
+        <a matButton="outlined" routerLink="/products">Отмена</a>
+        <button matButton="filled" type="submit" [disabled]="productForm().submitting()">
+          {{ id() ? 'Сохранить' : 'Создать товар' }}
+        </button>
+      </div>
+    </form>
+  }
+</mat-card>

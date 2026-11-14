@@ -1,0 +1,16 @@
+.product-editor {
+  gap: var(--space-5);
+  width: min(100%, 36rem);
+  padding: var(--space-6);
+  margin-inline: auto;
+
+  &__error {
+    color: var(--mat-sys-error);
+  }
+
+  &__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+}

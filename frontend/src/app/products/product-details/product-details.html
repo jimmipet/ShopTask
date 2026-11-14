@@ -1,0 +1,48 @@
+@if (product.error(); as error) {
+  <div class="notice">
+    <mat-icon>error</mat-icon>
+    <p>{{ error | apiError }}</p>
+    <a matButton routerLink="/products">В каталог</a>
+  </div>
+} @else if (product.hasValue()) {
+  @let item = product.value();
+  <mat-card class="product-details" appearance="outlined">
+    <div class="product-details__media">
+      @if (item.image; as image) {
+        <img class="product-details__image" [src]="image" [alt]="item.title" />
+      }
+    </div>
+
+    <div class="product-details__info">
+      <a matButton class="product-details__back" routerLink="/products">
+        <mat-icon>arrow_back</mat-icon>
+        Каталог
+      </a>
+      <p class="product-details__category">{{ item.category }}</p>
+      <h1 class="product-details__title">{{ item.title }}</h1>
+      <p class="product-details__price">{{ item.price | currency }}</p>
+      <p class="product-details__description">{{ item.description }}</p>
+      <div class="product-details__actions">
+        <button
+          matButton="filled"
+          class="product-details__add-button"
+          type="button"
+          [disabled]="cart.isBusy()"
+          (click)="cart.add(item.id)"
+        >
+          <mat-icon>add_shopping_cart</mat-icon>
+          В корзину
+        </button>
+        <a
+          matButton="outlined"
+          class="product-details__edit"
+          [routerLink]="['/products', item.id, 'edit']"
+        >
+          Редактировать
+        </a>
+      </div>
+    </div>
+  </mat-card>
+} @else {
+  <mat-spinner diameter="40" class="spinner" aria-label="Загружаем товар" />
+}

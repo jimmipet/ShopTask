@@ -1,0 +1,17 @@
+{
+  "editor.formatOnSave": true,
+  "[typescript][html][scss][json][jsonc][markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
+  },
+  "eslint.workingDirectories": ["frontend"],
+  "eslint.validate": ["typescript", "html"],
+  "stylelint.validate": ["scss"],
+  "stylelint.configBasedir": "frontend",
+  "scss.validate": false,
+  "prettier.prettierPath": "frontend/node_modules/prettier",
+  "typescript.tsdk": "frontend/node_modules/typescript/lib"
+}

@@ -1,0 +1,86 @@
+@let data = cart.data();
+<section class="cart">
+  <h1 class="page-title">Корзина</h1>
+
+  @if (cart.resource.error(); as error) {
+    <div class="notice">
+      <mat-icon>error</mat-icon>
+      <p>{{ error | apiError }}</p>
+    </div>
+  } @else if (cart.resource.isLoading()) {
+    <mat-spinner diameter="40" class="spinner" aria-label="Загружаем корзину" />
+  } @else if (!data.items.length) {
+    <div class="notice">
+      <mat-icon>shopping_cart</mat-icon>
+      <p>В корзине пока пусто.</p>
+      <a matButton="tonal" routerLink="/products">Перейти в каталог</a>
+    </div>
+  } @else {
+    <div class="cart__layout">
+      <ul class="cart__items">
+        @for (item of data.items; track item.productId) {
+          <li>
+            <mat-card class="cart-item" appearance="outlined">
+              <div class="cart-item__media">
+                @if (item.image; as image) {
+                  <img class="cart-item__image" [src]="image" [alt]="item.title" loading="lazy" />
+                }
+              </div>
+
+              <div class="cart-item__info">
+                <h2 class="cart-item__title">{{ item.title }}</h2>
+                <p class="cart-item__description">{{ item.description }}</p>
+              </div>
+
+              <div class="cart-item__controls">
+                <div class="cart-item__quantity">
+                  <button
+                    matIconButton
+                    type="button"
+                    aria-label="Уменьшить количество"
+                    [disabled]="cart.isBusy()"
+                    (click)="cart.decrease(item)"
+                  >
+                    <mat-icon>remove</mat-icon>
+                  </button>
+                  <span class="cart-item__quantity-value">{{ item.quantity }}</span>
+                  <button
+                    matIconButton
+                    type="button"
+                    aria-label="Увеличить количество"
+                    [disabled]="cart.isBusy()"
+                    (click)="cart.add(item.productId)"
+                  >
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </div>
+                <p class="cart-item__total">{{ item.lineTotal | currency }}</p>
+                <button
+                  matIconButton
+                  type="button"
+                  aria-label="Удалить из корзины"
+                  [disabled]="cart.isBusy()"
+                  (click)="cart.remove(item.productId)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </mat-card>
+          </li>
+        }
+      </ul>
+
+      <mat-card class="cart__summary" appearance="outlined">
+        <h2 class="cart__summary-title">Ваш заказ</h2>
+        <p class="cart__summary-row">
+          <span>Товаров</span>
+          <span>{{ data.totalQuantity }}</span>
+        </p>
+        <p class="cart__summary-row cart__summary-row--total">
+          <span>Итого</span>
+          <strong>{{ data.totalPrice | currency }}</strong>
+        </p>
+      </mat-card>
+    </div>
+  }
+</section>

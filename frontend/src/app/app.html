@@ -1,0 +1,36 @@
+@let totalQuantity = cart.data().totalQuantity;
+<mat-toolbar class="app__toolbar">
+  <nav class="app__nav" aria-label="Основная навигация">
+    <a class="app__brand" routerLink="/products">
+      <mat-icon>storefront</mat-icon>
+      ShopTask
+    </a>
+    <span class="app__spacer"></span>
+    <a
+      matButton
+      routerLink="/products"
+      routerLinkActive="app__link--active"
+      ariaCurrentWhenActive="page"
+    >
+      Каталог
+    </a>
+    <a
+      matIconButton
+      routerLink="/cart"
+      routerLinkActive="app__link--active"
+      ariaCurrentWhenActive="page"
+      aria-label="Корзина"
+    >
+      <mat-icon
+        [matBadge]="totalQuantity"
+        [matBadgeHidden]="!totalQuantity"
+        matBadgeDescription="товаров в корзине"
+      >
+        shopping_cart
+      </mat-icon>
+    </a>
+  </nav>
+</mat-toolbar>
+<main class="app__main">
+  <router-outlet />
+</main>
