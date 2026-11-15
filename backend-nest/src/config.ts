@@ -11,7 +11,7 @@ import {
 export class Env {
   @IsInt()
   @IsPositive()
-  PORT: number = 5240;
+  PORT: number;
 
   @IsUrl({ require_tld: false })
   CORS_ORIGIN: string;

@@ -1,0 +1,20 @@
+model Cart {
+  id               String     @id @default(uuid(7)) @db.Uuid
+  creationDate     DateTime   @default(now()) @map("creation_date") @db.Timestamptz
+  modificationDate DateTime   @default(now()) @map("modification_date") @db.Timestamptz
+  items            CartItem[]
+
+  @@map("carts")
+}
+
+model CartItem {
+  cartId    String  @map("cart_id") @db.Uuid
+  productId Int     @map("product_id")
+  quantity  Int
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([cartId, productId])
+  @@index([productId])
+  @@map("cart_items")
+}

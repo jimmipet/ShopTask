@@ -9,10 +9,8 @@ export class CartItemNotFoundException extends NotFoundException {
   }
 }
 
-export class CartItemQuantityOutOfRangeException extends BusinessLogicException {
-  constructor(min: number, max: number) {
-    super(
-      `Quantity of a product in the cart must be between ${min} and ${max}.`,
-    );
+export class CartItemQuantityInvalidException extends BusinessLogicException {
+  constructor() {
+    super('Quantity of a product in the cart must be greater than zero.');
   }
 }

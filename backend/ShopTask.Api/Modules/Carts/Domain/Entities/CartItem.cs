@@ -7,9 +7,6 @@ namespace ShopTask.Api.Modules.Carts.Domain.Entities;
 [Table("cart_items")]
 public class CartItem
 {
-    public const int MinQuantity = 1;
-    public const int MaxQuantity = 99;
-
     private CartItem()
     {
     }
@@ -32,7 +29,5 @@ public class CartItem
     public decimal LineTotal => Product.Price * Quantity;
 
     internal void ChangeQuantity(int quantity) =>
-        Quantity = quantity is >= MinQuantity and <= MaxQuantity
-            ? quantity
-            : throw new CartItemQuantityOutOfRangeException(MinQuantity, MaxQuantity);
+        Quantity = quantity > 0 ? quantity : throw new CartItemQuantityInvalidException();
 }
