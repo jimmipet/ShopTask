@@ -17,7 +17,8 @@ namespace ShopTask.Api.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    version = table.Column<int>(type: "integer", nullable: false)
+                    creation_date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
+                    modification_date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()")
                 },
                 constraints: table =>
                 {
@@ -30,16 +31,17 @@ namespace ShopTask.Api.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    title = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
-                    price = table.Column<decimal>(type: "numeric(12,2)", precision: 12, scale: 2, nullable: false),
-                    category = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
-                    description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
-                    image = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true)
+                    title = table.Column<string>(type: "text", nullable: false),
+                    price = table.Column<decimal>(type: "numeric", nullable: false),
+                    category = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "text", nullable: false),
+                    image = table.Column<string>(type: "text", nullable: true),
+                    creation_date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
+                    modification_date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_products", x => x.id);
-                    table.CheckConstraint("ck_products_price_non_negative", "price >= 0");
                 });
 
             migrationBuilder.CreateTable(
@@ -53,7 +55,6 @@ namespace ShopTask.Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_cart_items", x => new { x.cart_id, x.product_id });
-                    table.CheckConstraint("ck_cart_items_quantity_range", "quantity BETWEEN 1 AND 99");
                     table.ForeignKey(
                         name: "fk_cart_items_carts_cart_id",
                         column: x => x.cart_id,

@@ -10,7 +10,7 @@ namespace ShopTask.Api.Controllers;
 
 [ApiController]
 [Route("api/cart")]
-public sealed class CartController(ShopDbContext db) : ControllerBase
+public class CartController(ShopDbContext db) : ControllerBase
 {
     private const string CartCookieName = "shoptask_cart";
 

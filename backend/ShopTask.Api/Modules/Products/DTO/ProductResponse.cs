@@ -1,6 +1,6 @@
 namespace ShopTask.Api.Modules.Products.DTO;
 
-public sealed record ProductResponse
+public record ProductResponse
 {
     public int Id { get; init; }
 

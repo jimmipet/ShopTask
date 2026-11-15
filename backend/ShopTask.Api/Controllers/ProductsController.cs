@@ -9,7 +9,7 @@ namespace ShopTask.Api.Controllers;
 
 [ApiController]
 [Route("api/products")]
-public sealed class ProductsController(ShopDbContext db) : ControllerBase
+public class ProductsController(ShopDbContext db) : ControllerBase
 {
     private static readonly Uri FakeStoreProductsUrl = new("https://fakestoreapi.com/products");
 
@@ -56,7 +56,7 @@ public sealed class ProductsController(ShopDbContext db) : ControllerBase
 
         var existingTitles = await db.Products.Select(product => product.Title).ToHashSetAsync(cancellationToken);
         var newProducts = fakeProducts
-            .Where(fake => !existingTitles.Contains(fake.Title.Trim()))
+            .Where(fake => !existingTitles.Contains(fake.Title))
             .Select(fake => Product.Create(fake.Title, fake.Price, fake.Category, fake.Description, fake.Image))
             .ToArray();
 

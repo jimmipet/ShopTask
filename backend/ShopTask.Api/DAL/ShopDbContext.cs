@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using ShopTask.Api.Common.Domain.Entities;
 using ShopTask.Api.Modules.Carts.Domain.Entities;
 using ShopTask.Api.Modules.Products.Domain.Entities;
 
 namespace ShopTask.Api.DAL;
 
-public sealed class ShopDbContext(DbContextOptions<ShopDbContext> options) : DbContext(options)
+public class ShopDbContext(DbContextOptions<ShopDbContext> options) : DbContext(options)
 {
     public DbSet<Product> Products => Set<Product>();
 
@@ -12,24 +13,15 @@ public sealed class ShopDbContext(DbContextOptions<ShopDbContext> options) : DbC
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Product>(product =>
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(type => type.ClrType.IsAssignableTo(typeof(Entity))))
         {
-            product.ToTable(table => table.HasCheckConstraint("ck_products_price_non_negative", "price >= 0"));
-            product.Property(p => p.Title).HasMaxLength(Product.TitleMaxLength);
-            product.Property(p => p.Category).HasMaxLength(Product.CategoryMaxLength);
-            product.Property(p => p.Description).HasMaxLength(Product.DescriptionMaxLength);
-            product.Property(p => p.Image).HasMaxLength(Product.ImageMaxLength);
-            product.Property(p => p.Price).HasPrecision(Product.PricePrecision, Product.PriceScale);
-        });
+            modelBuilder.Entity(entityType.ClrType, entity =>
+            {
+                entity.Property(nameof(Entity.CreationDate)).HasDefaultValueSql("now()");
+                entity.Property(nameof(Entity.ModificationDate)).HasDefaultValueSql("now()");
+            });
+        }
 
-        modelBuilder.Entity<Cart>().Property(cart => cart.Version).IsConcurrencyToken();
-
-        modelBuilder.Entity<CartItem>(item =>
-        {
-            item.ToTable("cart_items", table => table.HasCheckConstraint(
-                "ck_cart_items_quantity_range",
-                $"quantity BETWEEN {CartItem.MinQuantity} AND {CartItem.MaxQuantity}"));
-            item.HasKey(i => new { i.CartId, i.ProductId });
-        });
+        modelBuilder.Entity<CartItem>().HasKey(item => new { item.CartId, item.ProductId });
     }
 }

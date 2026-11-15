@@ -1,6 +1,6 @@
 namespace ShopTask.Api.Modules.Carts.DTO;
 
-public sealed record CartResponse
+public record CartResponse
 {
     public IReadOnlyList<CartItemResponse> Items { get; init; } = [];
 

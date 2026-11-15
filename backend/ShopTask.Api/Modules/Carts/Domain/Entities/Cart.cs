@@ -1,19 +1,18 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using ShopTask.Api.Common.Domain.Entities;
 using ShopTask.Api.Modules.Carts.Domain.Exceptions;
 using ShopTask.Api.Modules.Products.Domain.Entities;
 
 namespace ShopTask.Api.Modules.Carts.Domain.Entities;
 
-public sealed class Cart
+[Table("carts")]
+public class Cart : Entity<Guid>
 {
     private readonly List<CartItem> items = [];
 
     private Cart()
     {
     }
-
-    public Guid Id { get; private set; }
-
-    public int Version { get; private set; }
 
     public IReadOnlyCollection<CartItem> Items => items.AsReadOnly();
 
@@ -34,13 +33,13 @@ public sealed class Cart
             items.Add(new CartItem(product, quantity));
         }
 
-        Version++;
+        ModificationDate = DateTimeOffset.UtcNow;
     }
 
     public void RemoveProduct(int productId)
     {
         items.Remove(FindItem(productId) ?? throw new CartItemNotFoundException(productId));
-        Version++;
+        ModificationDate = DateTimeOffset.UtcNow;
     }
 
     private CartItem? FindItem(int productId) => items.Find(item => item.ProductId == productId);

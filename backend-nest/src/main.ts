@@ -1,9 +1,18 @@
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module.js';
+import type { Env } from './config.js';
 
 const app = await NestFactory.create(AppModule);
+const config = app.get<ConfigService<Env, true>>(ConfigService);
+
 app.setGlobalPrefix('api');
 app.use(cookieParser());
-app.enableCors({ origin: process.env.CORS_ORIGIN, credentials: true });
-await app.listen(process.env.PORT ?? 5240);
+app.enableCors({
+  origin: config.get('CORS_ORIGIN', { infer: true }),
+  credentials: true,
+});
+app.enableShutdownHooks();
+
+await app.listen(config.get('PORT', { infer: true }));

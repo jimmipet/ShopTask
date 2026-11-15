@@ -1,6 +1,6 @@
 namespace ShopTask.Api.Modules.Carts.DTO;
 
-public sealed record CartItemResponse
+public record CartItemResponse
 {
     public int ProductId { get; init; }
 

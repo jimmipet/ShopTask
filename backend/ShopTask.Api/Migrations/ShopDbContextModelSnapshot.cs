@@ -25,13 +25,21 @@ namespace ShopTask.Api.Migrations
             modelBuilder.Entity("ShopTask.Api.Modules.Carts.Domain.Entities.Cart", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<int>("Version")
-                        .IsConcurrencyToken()
-                        .HasColumnType("integer")
-                        .HasColumnName("version");
+                    b.Property<DateTimeOffset>("CreationDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("creation_date")
+                        .HasDefaultValueSql("now()");
+
+                    b.Property<DateTimeOffset>("ModificationDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("modification_date")
+                        .HasDefaultValueSql("now()");
 
                     b.HasKey("Id")
                         .HasName("pk_carts");
@@ -59,10 +67,7 @@ namespace ShopTask.Api.Migrations
                     b.HasIndex("ProductId")
                         .HasDatabaseName("ix_cart_items_product_id");
 
-                    b.ToTable("cart_items", null, t =>
-                        {
-                            t.HasCheckConstraint("ck_cart_items_quantity_range", "quantity BETWEEN 1 AND 99");
-                        });
+                    b.ToTable("cart_items", (string)null);
                 });
 
             modelBuilder.Entity("ShopTask.Api.Modules.Products.Domain.Entities.Product", b =>
@@ -76,39 +81,43 @@ namespace ShopTask.Api.Migrations
 
                     b.Property<string>("Category")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("character varying(60)")
+                        .HasColumnType("text")
                         .HasColumnName("category");
+
+                    b.Property<DateTimeOffset>("CreationDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("creation_date")
+                        .HasDefaultValueSql("now()");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)")
+                        .HasColumnType("text")
                         .HasColumnName("description");
 
                     b.Property<string>("Image")
-                        .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)")
+                        .HasColumnType("text")
                         .HasColumnName("image");
 
+                    b.Property<DateTimeOffset>("ModificationDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("modification_date")
+                        .HasDefaultValueSql("now()");
+
                     b.Property<decimal>("Price")
-                        .HasPrecision(12, 2)
-                        .HasColumnType("numeric(12,2)")
+                        .HasColumnType("numeric")
                         .HasColumnName("price");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("character varying(120)")
+                        .HasColumnType("text")
                         .HasColumnName("title");
 
                     b.HasKey("Id")
                         .HasName("pk_products");
 
-                    b.ToTable("products", null, t =>
-                        {
-                            t.HasCheckConstraint("ck_products_price_non_negative", "price >= 0");
-                        });
+                    b.ToTable("products", (string)null);
                 });
 
             modelBuilder.Entity("ShopTask.Api.Modules.Carts.Domain.Entities.CartItem", b =>

@@ -1,14 +1,14 @@
 namespace ShopTask.Api.Modules.Products.DTO;
 
-public sealed record ProductRequest
+public record ProductRequest
 {
-    public string? Title { get; init; }
+    public string Title { get; init; } = string.Empty;
 
     public decimal Price { get; init; }
 
-    public string? Category { get; init; }
+    public string Category { get; init; } = string.Empty;
 
-    public string? Description { get; init; }
+    public string Description { get; init; } = string.Empty;
 
     public string? Image { get; init; }
 }

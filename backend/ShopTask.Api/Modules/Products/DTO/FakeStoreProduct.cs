@@ -1,6 +1,6 @@
 namespace ShopTask.Api.Modules.Products.DTO;
 
-public sealed record FakeStoreProduct
+public record FakeStoreProduct
 {
     public string Title { get; init; } = string.Empty;
 

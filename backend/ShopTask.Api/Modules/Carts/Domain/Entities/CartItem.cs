@@ -1,9 +1,11 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using ShopTask.Api.Modules.Carts.Domain.Exceptions;
 using ShopTask.Api.Modules.Products.Domain.Entities;
 
 namespace ShopTask.Api.Modules.Carts.Domain.Entities;
 
-public sealed class CartItem
+[Table("cart_items")]
+public class CartItem
 {
     public const int MinQuantity = 1;
     public const int MaxQuantity = 99;
@@ -19,13 +21,13 @@ public sealed class CartItem
         ChangeQuantity(quantity);
     }
 
-    public Guid CartId { get; private set; }
+    public Guid CartId { get; set; }
 
-    public int ProductId { get; private set; }
+    public int ProductId { get; set; }
 
-    public Product Product { get; private set; } = null!;
+    public Product Product { get; set; } = null!;
 
-    public int Quantity { get; private set; }
+    public int Quantity { get; set; }
 
     public decimal LineTotal => Product.Price * Quantity;
 
