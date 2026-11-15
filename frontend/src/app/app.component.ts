@@ -4,7 +4,7 @@ import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatToolbar } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { CartStore } from './cart/cart-store';
+import { CartStore } from './cart/cart.store';
 
 @Component({
   selector: 'app-root',
@@ -18,9 +18,9 @@ import { CartStore } from './cart/cart-store';
     MatIcon,
     MatBadge,
   ],
-  templateUrl: './app.html',
-  styleUrl: './app.scss',
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
 })
-export class App {
+export class AppComponent {
   protected readonly cart = inject(CartStore);
 }

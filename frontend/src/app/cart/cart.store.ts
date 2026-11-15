@@ -2,22 +2,7 @@ import { HttpClient, httpResource } from '@angular/common/http';
 import { Service, computed, inject, signal } from '@angular/core';
 import { finalize } from 'rxjs';
 import { environment } from '../../environments/environment';
-
-export interface CartItem {
-  readonly productId: number;
-  readonly title: string;
-  readonly description: string;
-  readonly image: string | null;
-  readonly unitPrice: number;
-  readonly quantity: number;
-  readonly lineTotal: number;
-}
-
-interface Cart {
-  readonly items: readonly CartItem[];
-  readonly totalQuantity: number;
-  readonly totalPrice: number;
-}
+import type { Cart, CartItem } from './cart.model';
 
 const CART_URL = `${environment.apiBaseUrl}/cart`;
 const EMPTY_CART: Cart = { items: [], totalQuantity: 0, totalPrice: 0 };

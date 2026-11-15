@@ -13,9 +13,10 @@ import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { ApiErrorPipe } from '../../core/api';
-import { TextField } from '../../shared/text-field';
-import { type ProductDraft, ProductsApi } from '../products-api';
+import { ApiErrorPipe } from '../../core/api-error.pipe';
+import { TextFieldComponent } from '../../shared/text-field/text-field.component';
+import type { ProductDraft } from '../product.model';
+import { ProductsService } from '../products.service';
 
 @Component({
   selector: 'app-product-editor',
@@ -27,13 +28,13 @@ import { type ProductDraft, ProductsApi } from '../products-api';
     MatCard,
     MatIcon,
     MatProgressSpinner,
-    TextField,
+    TextFieldComponent,
   ],
-  templateUrl: './product-editor.html',
-  styleUrl: './product-editor.scss',
+  templateUrl: './product-editor.component.html',
+  styleUrl: './product-editor.component.scss',
 })
-export default class ProductEditor {
-  private readonly api = inject(ProductsApi);
+export default class ProductEditorComponent {
+  private readonly api = inject(ProductsService);
   private readonly router = inject(Router);
   public readonly id = input<string>();
   protected readonly product = this.api.get(this.id);

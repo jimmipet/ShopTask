@@ -5,9 +5,9 @@ import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
-import { CartStore } from '../../cart/cart-store';
-import { ApiErrorPipe } from '../../core/api';
-import { ProductsApi } from '../products-api';
+import { CartStore } from '../../cart/cart.store';
+import { ApiErrorPipe } from '../../core/api-error.pipe';
+import { ProductsService } from '../products.service';
 
 @Component({
   selector: 'app-product-list',
@@ -21,12 +21,12 @@ import { ProductsApi } from '../products-api';
     MatCard,
     MatProgressSpinner,
   ],
-  templateUrl: './product-list.html',
-  styleUrl: './product-list.scss',
+  templateUrl: './product-list.component.html',
+  styleUrl: './product-list.component.scss',
 })
-export default class ProductList {
+export default class ProductListComponent {
   protected readonly cart = inject(CartStore);
-  protected readonly products = inject(ProductsApi).list();
+  protected readonly products = inject(ProductsService).list();
   protected readonly query = signal('');
 
   protected readonly filtered = computed(() => {

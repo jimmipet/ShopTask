@@ -26,7 +26,7 @@ import { MatInput } from '@angular/material/input';
     }
   `,
 })
-export class TextField {
+export class TextFieldComponent {
   public readonly label = input.required<string>();
   public readonly field = input.required<FieldTree<string> | FieldTree<number>>();
   public readonly type = input<'text' | 'number' | 'url'>('text');

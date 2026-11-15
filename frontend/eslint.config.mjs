@@ -45,8 +45,6 @@ export default defineConfig([
         'error',
         { accessibility: 'explicit', overrides: { constructors: 'off' } },
       ],
-      '@angular-eslint/component-class-suffix': 'off',
-      '@angular-eslint/directive-class-suffix': 'off',
       '@typescript-eslint/member-ordering': [
         'error',
         { default: ['signature', 'field', 'constructor', 'method'] },

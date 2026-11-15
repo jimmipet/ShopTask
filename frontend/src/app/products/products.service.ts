@@ -2,22 +2,12 @@ import { HttpClient, type HttpResourceRef, httpResource } from '@angular/common/
 import { Service, inject } from '@angular/core';
 import type { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-
-export interface Product {
-  readonly id: number;
-  readonly title: string;
-  readonly price: number;
-  readonly category: string;
-  readonly description: string;
-  readonly image: string | null;
-}
-
-export type ProductDraft = Omit<Product, 'id' | 'image'> & { readonly image: string };
+import type { Product, ProductDraft } from './product.model';
 
 const BASE_URL = `${environment.apiBaseUrl}/products`;
 
 @Service()
-export class ProductsApi {
+export class ProductsService {
   private readonly http = inject(HttpClient);
 
   public list(): HttpResourceRef<readonly Product[]> {

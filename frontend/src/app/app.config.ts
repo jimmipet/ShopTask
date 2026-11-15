@@ -10,7 +10,7 @@ import {
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 import { routes } from './app.routes';
-import { apiInterceptor } from './core/api';
+import { apiInterceptor } from './core/api.interceptor';
 
 registerLocaleData(localeRu);
 

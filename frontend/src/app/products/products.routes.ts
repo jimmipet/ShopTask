@@ -5,21 +5,21 @@ const isProductId: CanMatchFn = (_route, [segment]) => /^[1-9]\d*$/.test(segment
 const productsRoutes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./product-list/product-list'),
+    loadComponent: () => import('./product-list/product-list.component'),
   },
   {
     path: 'new',
-    loadComponent: () => import('./product-editor/product-editor'),
+    loadComponent: () => import('./product-editor/product-editor.component'),
   },
   {
     path: ':id',
     canMatch: [isProductId],
-    loadComponent: () => import('./product-details/product-details'),
+    loadComponent: () => import('./product-details/product-details.component'),
   },
   {
     path: ':id/edit',
     canMatch: [isProductId],
-    loadComponent: () => import('./product-editor/product-editor'),
+    loadComponent: () => import('./product-editor/product-editor.component'),
   },
 ];
 

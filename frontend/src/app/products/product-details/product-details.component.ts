@@ -5,9 +5,9 @@ import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
-import { CartStore } from '../../cart/cart-store';
-import { ApiErrorPipe } from '../../core/api';
-import { ProductsApi } from '../products-api';
+import { CartStore } from '../../cart/cart.store';
+import { ApiErrorPipe } from '../../core/api-error.pipe';
+import { ProductsService } from '../products.service';
 
 @Component({
   selector: 'app-product-details',
@@ -20,11 +20,11 @@ import { ProductsApi } from '../products-api';
     MatCard,
     MatProgressSpinner,
   ],
-  templateUrl: './product-details.html',
-  styleUrl: './product-details.scss',
+  templateUrl: './product-details.component.html',
+  styleUrl: './product-details.component.scss',
 })
-export default class ProductDetails {
-  private readonly api = inject(ProductsApi);
+export default class ProductDetailsComponent {
+  private readonly api = inject(ProductsService);
   protected readonly cart = inject(CartStore);
   public readonly id = input.required<string>();
   protected readonly product = this.api.get(this.id);

@@ -1,4 +1,4 @@
-import { HttpErrorResponse, type HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Pipe, type PipeTransform } from '@angular/core';
 
 const API_ERROR_MESSAGES = {
@@ -7,9 +7,6 @@ const API_ERROR_MESSAGES = {
   ProductNotFoundException: 'Товар не найден.',
   UnknownError: 'Что-то пошло не так. Попробуйте ещё раз.',
 } as const;
-
-export const apiInterceptor: HttpInterceptorFn = (request, next) =>
-  next(request.clone({ withCredentials: true }));
 
 @Pipe({ name: 'apiError' })
 export class ApiErrorPipe implements PipeTransform {
